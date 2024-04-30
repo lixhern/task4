@@ -1,0 +1,117 @@
+﻿@model IEnumerable<task4.Models.User>
+@{
+    ViewBag.Title = "List of users";
+}
+<style>
+    .btn img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
+<div class="btn-group" role="group" aria-label="Basic example">
+    <form asp-action="Block" method="post" id="blockForm">
+        <input type="hidden" name="id" id="blockId" />
+        <button type="submit" class="btn btn-lg  btn-danger block-button" action="50" height="16">Block</button>
+    </form>
+    <form asp-action="Unblock" method="post" id="unblockForm">
+        <input type="hidden" name="id" id="unblockId" />
+        <button type="submit" class="btn btn-sm unblock-button"><img src="~/lib/img/unlocked.png" style="width: 36px; height: 36px;" /></button>
+    </form>
+    <form asp-action="Delete" method="post" id="deleteForm">
+        <input type="hidden" name="id" id="deleteId" />
+        <button type="submit" class="btn btn-sm delete-button"><img src="~/lib/img/garbageCan.png" style="width: 36px; height: 36px;" /></button>
+    </form>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="selectAllCheckbox">
+                    <label class="form-check-label" for="selectAllCheckbox">
+                    </label>
+                </div>
+            </th>
+            <th scope="col">ID</th>
+            <th scope="col">Email</th>
+            <th scope="col">Name</th>
+            <th scope="col">Registration time</th>
+            <th scope="col">Last entry time</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var user in Model)
+        {
+            <tr data-user-id="@user.Id">
+            <td scope="row">
+                <div class="form-check">
+                        <input class="form-check-input user-checkbox" type="checkbox" id="flexCheckDefault">
+                </div>
+            </td>
+                <td>@user.Id</td>
+            <td>@user.Email</td>
+            <td>@user.UserName</td>
+            <td>@user.RegistrationDate</td>
+            <td>@user.AuthorizationDate</td>
+            <td>@if (user.Blocked)
+                {
+                    <p>Block</p>
+                }
+                else
+                {
+                    <p>Active</p>  
+                }
+            </td>
+            </tr>
+        }
+     
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#selectAllCheckbox").change(function () {
+                $(".user-checkbox").prop("checked", $(this).prop("checked"));
+            });
+
+            $(".user-checkbox").change(function () {
+                if ($(".user-checkbox:checked").length < $(".user-checkbox").length) {
+                    $("#selectAllCheckbox").prop("checked", false);
+                } else {
+                    $("#selectAllCheckbox").prop("checked", true);
+                }
+            });
+
+            $('.delete-button').click(function () {
+                var userIds = [];
+                $('.user-checkbox:checked').each(function () {
+                    userIds.push($(this).closest('tr').data('user-id'));
+                });
+                $("#deleteId").val(userIds);
+                $('#deleteForm').submit();
+            });
+
+            $('.block-button').click(function () {
+                var userIds = [];
+                $('.user-checkbox:checked').each(function () {
+                    userIds.push($(this).closest('tr').data('user-id'));
+                });
+                $("#blockId").val(userIds); 
+                $('#blockForm').submit();
+            });
+            $('.unblock-button').click(function () {
+                var userIds = [];
+                $('.user-checkbox:checked').each(function () {
+                    userIds.push($(this).closest('tr').data('user-id'));
+                });
+                $("#unblockId").val(userIds); 
+                $('#unblockForm').submit();
+            });
+        });
+    </script>    
+}

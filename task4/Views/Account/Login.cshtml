@@ -1,0 +1,26 @@
+﻿@model task4.ViewModels.LoginViewModel
+
+
+<h1>Sing in</h1>
+<form method="post" asp-controller="Account" asp-action="Login"
+      asp-route-returnUrl="@Model.ReturnUrl">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Name"></label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class ="mb-3">
+        <label asp-for="Password"></label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary" >Submit</button>
+    </div>
+    <div>
+        <p>
+            <a href="Register">Create accout?</a>
+        </p>
+    </div>
+</form>

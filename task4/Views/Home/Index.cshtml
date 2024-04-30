@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome, @User.Identity.Name</h1>
+        <h2><a href = "Users">Users</a></h2>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1 class="display-4">Welcome, <a href="Account/Register">create accout?</a></h1>
+        <h2><a href="Account/Login">Already have account?</a></h2>
+    </div>
+}
+

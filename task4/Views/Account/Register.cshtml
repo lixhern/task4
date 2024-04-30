@@ -1,0 +1,29 @@
+﻿@model task4.ViewModels.RegisterViewModel
+@{
+    
+}
+<h1>Registration</h1>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="mb-3">
+        <label asp-for="Email">Email address</label><br />
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Name">Name</label><br />
+        <input asp-for="Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Password">Password</label><br />
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <div>
+        <p>
+            <a href="Login">Already have account?</a>
+        </p>
+    </div>
+</form>
